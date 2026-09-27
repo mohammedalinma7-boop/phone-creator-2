@@ -1,0 +1,1007 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PHONE CREATOR — Ultimate Phone Company</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:
+ radial-gradient(circle at 20% 10%,#182b55 0,#070b18 35%,#02030a 100%);
+ color:white;
+ min-height:100vh;
+}
+button,input,select{font:inherit}
+button{
+ border:0;
+ border-radius:12px;
+ padding:11px 15px;
+ cursor:pointer;
+ background:#24385f;
+ color:white;
+ font-weight:bold;
+}
+button:hover{filter:brightness(1.3)}
+h1,h2,h3{margin-top:0}
+
+#news{
+ position:fixed;
+ left:12px;
+ top:12px;
+ width:310px;
+ max-width:calc(100vw - 24px);
+ background:rgba(5,10,25,.94);
+ border:1px solid #37d9ff;
+ border-radius:18px;
+ padding:12px;
+ z-index:1000;
+ box-shadow:0 0 30px #00bfff55;
+}
+.newsHead{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.aiFace{
+ width:48px;
+ height:48px;
+ border-radius:50%;
+ background:linear-gradient(145deg,#6ef,#a65cff);
+ display:grid;
+ place-items:center;
+ font-size:25px;
+}
+.newsTitle{color:#58e7ff;font-weight:bold}
+#newsText{
+ font-size:13px;
+ line-height:1.4;
+ margin-top:9px;
+ min-height:55px;
+}
+#ticker{
+ color:#ffd45a;
+ font-size:12px;
+ border-top:1px solid #ffffff22;
+ padding-top:7px;
+}
+
+header{
+ padding:25px 20px 15px;
+ text-align:center;
+ margin-top:105px;
+}
+header h1{
+ font-size:clamp(30px,6vw,65px);
+ margin:0;
+ background:linear-gradient(90deg,#45eaff,#b86cff,#ff4fc8);
+ -webkit-background-clip:text;
+ color:transparent;
+}
+header p{color:#9eb1d7}
+
+.container{
+ width:min(1250px,94%);
+ margin:auto;
+ display:grid;
+ gap:18px;
+}
+
+.panel{
+ background:rgba(10,17,38,.9);
+ border:1px solid #263c68;
+ border-radius:20px;
+ padding:18px;
+ box-shadow:0 10px 40px #0008;
+}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:10px;
+}
+.stat{
+ background:#111d3b;
+ padding:13px;
+ border-radius:14px;
+ text-align:center;
+}
+.stat b{
+ display:block;
+ color:#56e6ff;
+ font-size:20px;
+ margin-top:5px;
+}
+
+.designGrid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:18px;
+}
+
+label{
+ display:block;
+ margin:12px 0 5px;
+ color:#aebfe5;
+}
+input[type=text],select,input[type=color]{
+ width:100%;
+ padding:11px;
+ border-radius:10px;
+ border:1px solid #38527d;
+ background:#080e20;
+ color:white;
+}
+input[type=color]{height:45px;padding:3px}
+
+.tech{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+.techBox{
+ background:#0b1530;
+ border:1px solid #263e70;
+ border-radius:14px;
+ padding:12px;
+}
+.techTop{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+}
+.level{
+ color:#58e7ff;
+ font-weight:bold;
+}
+input[type=range]{
+ width:100%;
+ accent-color:#48ddff;
+}
+
+.phoneStage{
+ min-height:530px;
+ display:grid;
+ place-items:center;
+ background:
+ radial-gradient(circle,#182c58 0,#080d20 45%,#03050d 100%);
+ border-radius:18px;
+ overflow:hidden;
+}
+
+.phone{
+ width:245px;
+ height:470px;
+ border-radius:38px;
+ padding:10px;
+ position:relative;
+ box-shadow:0 0 45px #49ddff66, inset 0 0 12px #ffffff66;
+ transition:.3s;
+}
+.screen{
+ width:100%;
+ height:100%;
+ border-radius:30px;
+ background:#091022;
+ position:relative;
+ overflow:hidden;
+}
+.screen::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(135deg,#ffffff22,transparent 35%,#0004);
+}
+.notch{
+ position:absolute;
+ top:8px;
+ left:50%;
+ transform:translateX(-50%);
+ width:75px;
+ height:20px;
+ border-radius:15px;
+ background:#000;
+ z-index:3;
+}
+.phoneLogo{
+ position:absolute;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%);
+ font-size:24px;
+ font-weight:bold;
+ z-index:4;
+ text-shadow:0 0 15px currentColor;
+}
+.camera{
+ position:absolute;
+ top:20px;
+ left:20px;
+ width:75px;
+ height:75px;
+ border-radius:20px;
+ background:#101010cc;
+ padding:7px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:5px;
+ z-index:5;
+}
+.lens{
+ border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#fff,#4d6078 8%,#05070b 35%,#152b55 70%,#000);
+ border:2px solid #aaa;
+}
+.side{
+ position:absolute;
+ right:-5px;
+ top:100px;
+ width:5px;
+ height:100px;
+ background:#aaa;
+ border-radius:5px;
+}
+
+.logoArea{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+canvas{
+ width:100%;
+ height:180px;
+ background:#050914;
+ border:1px solid #334a72;
+ border-radius:12px;
+ touch-action:none;
+}
+.big{
+ width:100%;
+ margin-top:10px;
+ background:linear-gradient(90deg,#00bfff,#8d4cff);
+}
+.danger{background:#8c2345}
+
+.rivals{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
+}
+.rival{
+ padding:12px;
+ border-radius:14px;
+ background:#101b38;
+ border:1px solid #304b78;
+}
+.rival b{color:#ff79bd}
+.bar{
+ height:7px;
+ background:#263452;
+ border-radius:10px;
+ overflow:hidden;
+ margin-top:7px;
+}
+.bar i{
+ display:block;
+ height:100%;
+ background:linear-gradient(90deg,#ff4b8b,#a85cff);
+}
+
+.actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+}
+.launch{
+ background:linear-gradient(90deg,#ff2d8b,#7c4dff,#00c8ff);
+ font-size:18px;
+ padding:16px 25px;
+}
+
+#log{
+ max-height:180px;
+ overflow:auto;
+ font-size:13px;
+ line-height:1.5;
+ color:#b8c8e8;
+}
+
+@media(max-width:800px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .designGrid{grid-template-columns:1fr}
+ .rivals{grid-template-columns:repeat(2,1fr)}
+ .tech{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+ #news{position:relative;left:auto;top:auto;margin:10px auto;width:94%}
+ header{margin-top:15px}
+ .rivals{grid-template-columns:1fr}
+ .phone{transform:scale(.82)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="news">
+ <div class="newsHead">
+  <div class="aiFace">👩‍💻</div>
+  <div>
+   <div class="newsTitle">NOVA AI NEWS</div>
+   <small>Rival Market Intelligence</small>
+  </div>
+ </div>
+ <div id="newsText">Welcome, CEO. I'm watching the phone market for you...</div>
+ <div id="ticker">LIVE MARKET SCAN ●</div>
+</div>
+
+<header>
+ <h1>PHONE CREATOR</h1>
+ <p>Build it. Design it. Sell it. Upgrade it. Defeat the market.</p>
+</header>
+
+<div class="container">
+
+<div class="panel">
+ <h2>💰 Company Dashboard</h2>
+ <div class="stats">
+  <div class="stat">Cash<b id="cash">$10000</b></div>
+  <div class="stat">Sales<b id="sales">0</b></div>
+  <div class="stat">Reputation<b id="rep">0</b></div>
+  <div class="stat">Company Level<b id="companyLevel">1</b></div>
+  <div class="stat">Market Share<b id="market">0%</b></div>
+ </div>
+</div>
+
+<div class="panel">
+ <h2>🏢 Your Company</h2>
+ <label>Company Name</label>
+ <input id="companyName" value="NovaTech">
+
+ <label>Phone Name</label>
+ <input id="phoneName" value="Nova X1">
+</div>
+
+<div class="designGrid">
+
+<div class="panel">
+ <h2>🎨 Design Your Phone</h2>
+
+ <label>Back Color</label>
+ <input id="backColor" type="color" value="#151a2e">
+
+ <label>Frame Color</label>
+ <input id="frameColor" type="color" value="#00c8ff">
+
+ <label>Screen Color</label>
+ <input id="screenColor" type="color" value="#07152d">
+
+ <label>Logo Color</label>
+ <input id="logoColor" type="color" value="#55eaff">
+
+ <label>Body Material</label>
+ <select id="material">
+  <option>Plastic</option>
+  <option>Aluminum</option>
+  <option>Glass</option>
+  <option>Ceramic</option>
+  <option>Titanium</option>
+  <option>Carbon Fiber</option>
+  <option>Diamond Glass</option>
+ </select>
+
+ <label>Phone Shape</label>
+ <select id="shape">
+  <option value="38px">Rounded</option>
+  <option value="20px">Square</option>
+  <option value="55px">Ultra Rounded</option>
+  <option value="10px">Gaming Sharp</option>
+ </select>
+
+ <label>Camera Position</label>
+ <select id="cameraPosition">
+  <option>Top Left</option>
+  <option>Top Center</option>
+  <option>Top Right</option>
+  <option>Center</option>
+  <option>Bottom Left</option>
+ </select>
+
+ <label>Camera Housing</label>
+ <select id="cameraHousing">
+  <option>Square</option>
+  <option>Circle</option>
+  <option>Pill</option>
+  <option>Diamond</option>
+ </select>
+</div>
+
+<div class="panel">
+ <h2>📱 Live Phone Preview</h2>
+ <div class="phoneStage">
+  <div class="phone" id="phone">
+   <div class="screen" id="screen">
+    <div class="notch"></div>
+    <div class="camera" id="camera"></div>
+    <div class="phoneLogo" id="phoneLogo">NOVA</div>
+   </div>
+   <div class="side"></div>
+  </div>
+ </div>
+</div>
+
+</div>
+
+<div class="panel">
+ <h2>✍️ Create Your Logo</h2>
+
+ <div class="logoArea">
+  <div>
+   <label>Logo Text</label>
+   <input id="logoText" value="NOVA">
+   <button class="big" onclick="updateLogo()">USE LOGO TEXT</button>
+
+   <label>Logo Quality</label>
+   <div class="stat">
+    <b id="logoScore">0</b>/100
+   </div>
+  </div>
+
+  <canvas id="logoCanvas" width="500" height="250"></canvas>
+ </div>
+
+ <button onclick="clearLogo()">CLEAR DRAWING</button>
+</div>
+
+<div class="panel">
+ <h2>⚙️ Technology — Up to 100,000 Levels Each</h2>
+ <p style="color:#91a5cc">
+ Every slider can reach <b>100,000</b>. Higher technology increases production cost,
+ quality, attraction and possible sales.
+ </p>
+
+ <div class="tech" id="tech"></div>
+</div>
+
+<div class="panel">
+ <h2>🔬 Research</h2>
+ <div class="actions">
+  <button onclick="research('manufacturing')">🏭 Upgrade Manufacturing</button>
+  <button onclick="research('marketing')">📢 Upgrade Marketing</button>
+  <button onclick="research('design')">🎨 Upgrade Design</button>
+  <button onclick="research('battery')">🔋 Battery Research</button>
+  <button onclick="research('camera')">📷 Camera Research</button>
+ </div>
+ <p id="researchInfo"></p>
+</div>
+
+<div class="panel">
+ <h2>🏭 Production</h2>
+ <p>Production cost changes according to your technology.</p>
+ <button onclick="manufacture()">MANUFACTURE PHONE</button>
+ <button class="launch" onclick="launchPhone()">🚀 LAUNCH PHONE</button>
+</div>
+
+<div class="panel">
+ <h2>🌎 16 Rival Phone Companies</h2>
+ <div class="rivals" id="rivals"></div>
+</div>
+
+<div class="panel">
+ <h2>📰 Company News</h2>
+ <div id="log">Welcome CEO. Your company is ready.</div>
+</div>
+
+</div>
+
+<script>
+const MAX=100000;
+
+let game={
+ cash:10000,
+ sales:0,
+ reputation:0,
+ companyLevel:1,
+ market:0,
+ inventory:0,
+ logoScore:0,
+ research:{
+  manufacturing:1,
+  marketing:1,
+  design:1,
+  battery:1,
+  camera:1
+ }
+};
+
+const techData={
+ camera:{name:"📷 Camera",unit:"MP"},
+ processor:{name:"🧠 Processor",unit:"GHz"},
+ ram:{name:"💾 RAM",unit:"GB"},
+ storage:{name:"🗄️ Storage",unit:"GB / TB"},
+ battery:{name:"🔋 Battery",unit:"mAh"},
+ network:{name:"📡 Network",unit:"G"},
+ display:{name:"🖥️ Display",unit:"Hz"},
+ wifi:{name:"📶 Wi-Fi",unit:"Mbps"},
+ charging:{name:"⚡ Charging",unit:"W"},
+ audio:{name:"🔊 Audio",unit:"kHz"},
+ bluetooth:{name:"🔵 Bluetooth",unit:"Mbps"},
+ cooling:{name:"❄️ Cooling",unit:"Level"},
+ security:{name:"🔐 Security",unit:"Level"},
+ ai:{name:"🤖 AI Engine",unit:"Level"}
+};
+
+let tech={
+ camera:100,
+ processor:100,
+ ram:8,
+ storage:128,
+ battery:4500,
+ network:5,
+ display:120,
+ wifi:1000,
+ charging:65,
+ audio:48,
+ bluetooth:100,
+ cooling:50,
+ security:50,
+ ai:25
+};
+
+const rivals=[
+ "VOLTEX","ORBIT","FUSION","TITAN MOBILE",
+ "NEXORA","QUANTIX","APEX","ZENITH",
+ "PULSAR","NEON MOBILE","CYBERCORE","OMEGA",
+ "SKYLINE","INFINITY","ECHO MOBILE","HYPERION"
+];
+
+let rivalData=rivals.map((name,i)=>({
+ name,
+ power:100+i*18+Math.random()*80,
+ sales:Math.floor(Math.random()*9000)+1000,
+ share:Math.random()*8+1
+}));
+
+function money(n){
+ return "$"+Math.floor(n).toLocaleString();
+}
+
+function buildTech(){
+ const box=document.getElementById("tech");
+
+ for(const key in techData){
+  const d=techData[key];
+
+  const wrap=document.createElement("div");
+  wrap.className="techBox";
+
+  wrap.innerHTML=`
+   <div class="techTop">
+    <b>${d.name}</b>
+    <span class="level" id="${key}Value">${formatTech(key,tech[key])} ${d.unit}</span>
+   </div>
+   <input type="range"
+     min="1"
+     max="${MAX}"
+     value="${tech[key]}"
+     id="${key}"
+     oninput="setTech('${key}',this.value)">
+   <div style="font-size:11px;color:#7388b1">
+     Level 1 → Level 100,000
+   </div>
+  `;
+
+  box.appendChild(wrap);
+ }
+}
+
+function formatTech(key,v){
+ v=Number(v);
+
+ if(key==="storage"){
+  if(v>=1000) return (v/1000).toFixed(1)+" TB";
+  return v+" GB";
+ }
+
+ if(key==="ram"){
+  if(v>=1024) return (v/1024).toFixed(1)+" TB";
+  return v+" GB";
+ }
+
+ if(key==="wifi"){
+  if(v>=1000) return (v/1000).toFixed(1)+" Gbps";
+  return v+" Mbps";
+ }
+
+ if(key==="processor"){
+  return v+" GHz";
+ }
+
+ return v.toLocaleString();
+}
+
+function setTech(key,value){
+ tech[key]=Number(value);
+ document.getElementById(key+"Value").textContent=
+  formatTech(key,tech[key])+" "+techData[key].unit;
+
+ updatePhone();
+}
+
+function calculatePower(){
+ let total=0;
+ for(const k in tech) total+=Math.sqrt(tech[k]);
+ return total;
+}
+
+function calculateCost(){
+ return 250+
+ calculatePower()*4+
+ tech.storage*.03+
+ tech.battery*.02+
+ tech.camera*.08-
+ game.research.manufacturing*25;
+}
+
+function calculateAttraction(){
+ return (
+  calculatePower()*.7+
+  game.logoScore*2+
+  game.research.marketing*30+
+  game.research.design*25+
+  game.reputation*.3
+ );
+}
+
+function manufacture(){
+ let cost=calculateCost();
+
+ if(game.cash<cost){
+  addLog("❌ Not enough money to manufacture this phone.");
+  return;
+ }
+
+ game.cash-=cost;
+ game.inventory++;
+ addLog("🏭 Manufactured 1 "+document.getElementById("phoneName").value+
+ " for "+money(cost)+".");
+ updateUI();
+}
+
+function launchPhone(){
+ if(game.inventory<=0){
+  addLog("⚠️ You need to manufacture at least one phone first.");
+  return;
+ }
+
+ let attraction=calculateAttraction();
+
+ let strongest=Math.max(...rivalData.map(r=>r.power));
+
+ let demand=
+  Math.max(
+   10,
+   Math.floor(
+    attraction*8+
+    Math.random()*500-
+    strongest*.7
+   )
+  );
+
+ let price=
+  Math.max(
+   199,
+   Math.floor(
+    300+
+    calculatePower()*5+
+    game.research.design*80
+   )
+  );
+
+ let sold=Math.min(game.inventory,demand);
+
+ let revenue=sold*price;
+ game.cash+=revenue;
+ game.sales+=sold;
+ game.inventory-=sold;
+
+ game.reputation+=Math.min(20,sold/1000+attraction/500);
+ game.companyLevel=
+  Math.max(1,Math.floor(game.sales/100)+1);
+
+ game.market=Math.min(
+  100,
+  game.sales/(game.sales+50000)*100
+ );
+
+ rivalData.forEach(r=>{
+  r.power+=Math.random()*15;
+  r.sales+=Math.floor(Math.random()*1500);
+  r.share=Math.max(1,Math.min(30,r.share+(Math.random()*2-1)));
+ });
+
+ addLog(
+  "🚀 LAUNCH! "+sold.toLocaleString()+
+  " phones sold at "+money(price)+
+  ". Revenue: "+money(revenue)+"."
+ );
+
+ updateUI();
+}
+
+function research(type){
+ let current=game.research[type];
+
+ let cost=Math.floor(
+  1000*Math.pow(current,1.45)
+ );
+
+ if(game.cash<cost){
+  addLog("❌ You need "+money(cost)+" for this research upgrade.");
+  return;
+ }
+
+ game.cash-=cost;
+ game.research[type]++;
+
+ addLog("🔬 "+type.toUpperCase()+
+ " research upgraded to level "+
+ game.research[type]+".");
+
+ updateUI();
+}
+
+function updatePhone(){
+ const phone=document.getElementById("phone");
+ const screen=document.getElementById("screen");
+ const logo=document.getElementById("phoneLogo");
+ const camera=document.getElementById("camera");
+
+ phone.style.background=document.getElementById("frameColor").value;
+ phone.style.borderRadius=document.getElementById("shape").value;
+
+ screen.style.background=document.getElementById("screenColor").value;
+
+ logo.style.color=document.getElementById("logoColor").value;
+ logo.textContent=
+  document.getElementById("logoText").value||"PHONE";
+
+ let position=document.getElementById("cameraPosition").value;
+
+ camera.style.left="20px";
+ camera.style.right="auto";
+ camera.style.top="20px";
+ camera.style.bottom="auto";
+
+ if(position==="Top Center"){
+  camera.style.left="50%";
+  camera.style.transform="translateX(-50%)";
+ }
+ else if(position==="Top Right"){
+  camera.style.left="auto";
+  camera.style.right="20px";
+ }
+ else if(position==="Center"){
+  camera.style.left="50%";
+  camera.style.top="50%";
+  camera.style.transform="translate(-50%,-50%)";
+ }
+ else if(position==="Bottom Left"){
+  camera.style.top="auto";
+  camera.style.bottom="20px";
+ }
+
+ let housing=document.getElementById("cameraHousing").value;
+
+ if(housing==="Circle") camera.style.borderRadius="50%";
+ else if(housing==="Pill") camera.style.borderRadius="40px";
+ else if(housing==="Diamond") camera.style.borderRadius="5px";
+ else camera.style.borderRadius="20px";
+
+ let lenses=Math.min(
+  6,
+  Math.max(1,Math.ceil(tech.camera/17000))
+ );
+
+ camera.innerHTML="";
+
+ for(let i=0;i<lenses;i++){
+  let lens=document.createElement("div");
+  lens.className="lens";
+  camera.appendChild(lens);
+ }
+}
+
+function updateLogo(){
+ let text=document.getElementById("logoText").value.trim();
+
+ game.logoScore=Math.min(
+  100,
+  Math.floor(
+   text.length*8+
+   Math.random()*35+
+   game.research.design*3
+  )
+ );
+
+ document.getElementById("logoScore").textContent=game.logoScore;
+
+ addLog("🎨 Logo created. Design quality: "+game.logoScore+"/100.");
+
+ updatePhone();
+ updateUI();
+}
+
+const canvas=document.getElementById("logoCanvas");
+const ctx=canvas.getContext("2d");
+
+ctx.lineWidth=8;
+ctx.lineCap="round";
+ctx.strokeStyle="#48ddff";
+
+let drawing=false;
+
+function pointerPos(e){
+ const r=canvas.getBoundingClientRect();
+ return {
+  x:(e.clientX-r.left)*canvas.width/r.width,
+  y:(e.clientY-r.top)*canvas.height/r.height
+ };
+}
+
+canvas.addEventListener("pointerdown",e=>{
+ drawing=true;
+ let p=pointerPos(e);
+ ctx.beginPath();
+ ctx.moveTo(p.x,p.y);
+});
+
+canvas.addEventListener("pointermove",e=>{
+ if(!drawing)return;
+ let p=pointerPos(e);
+ ctx.lineTo(p.x,p.y);
+ ctx.stroke();
+
+ game.logoScore=Math.min(100,game.logoScore+.1);
+ document.getElementById("logoScore").textContent=Math.floor(game.logoScore);
+});
+
+canvas.addEventListener("pointerup",()=>{
+ drawing=false;
+});
+
+canvas.addEventListener("pointerleave",()=>{
+ drawing=false;
+});
+
+function clearLogo(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ game.logoScore=0;
+ document.getElementById("logoScore").textContent=0;
+ addLog("🧹 Logo drawing cleared.");
+}
+
+function updateUI(){
+ document.getElementById("cash").textContent=money(game.cash);
+ document.getElementById("sales").textContent=game.sales.toLocaleString();
+ document.getElementById("rep").textContent=Math.floor(game.reputation);
+ document.getElementById("companyLevel").textContent=game.companyLevel;
+ document.getElementById("market").textContent=game.market.toFixed(2)+"%";
+
+ document.getElementById("researchInfo").textContent=
+  "Manufacturing "+game.research.manufacturing+
+  " | Marketing "+game.research.marketing+
+  " | Design "+game.research.design+
+  " | Battery "+game.research.battery+
+  " | Camera "+game.research.camera;
+
+ renderRivals();
+}
+
+function renderRivals(){
+ const box=document.getElementById("rivals");
+ box.innerHTML="";
+
+ rivalData.forEach((r,i)=>{
+  box.innerHTML+=`
+   <div class="rival">
+    <b>${i+1}. ${r.name}</b>
+    <div>Power: ${Math.floor(r.power)}</div>
+    <div>Sales: ${r.sales.toLocaleString()}</div>
+    <div>Share: ${r.share.toFixed(1)}%</div>
+    <div class="bar"><i style="width:${Math.min(100,r.power/8)}%"></i></div>
+   </div>
+  `;
+ });
+}
+
+function addLog(text){
+ const log=document.getElementById("log");
+ const time=new Date().toLocaleTimeString();
+ log.innerHTML=
+  `<div>[${
+   time
+  }] ${text}</div>`+log.innerHTML;
+}
+
+const newsTemplates=[
+ ()=>`${rivalData[0].name} just released a new flagship. Its market power is ${Math.floor(rivalData[0].power)}.`,
+ ()=>`${rivalData[3].name} reported ${rivalData[3].sales.toLocaleString()} phones sold.`,
+ ()=>`${rivalData[5].name} is investing heavily in camera technology.`,
+ ()=>`${rivalData[8].name} is cutting prices to attract more customers.`,
+ ()=>`${rivalData[10].name} announced a major AI-phone upgrade.`,
+ ()=>`${rivalData[12].name} is gaining attention in the global market.`,
+ ()=>`${rivalData[14].name} is preparing a new battery technology.`,
+ ()=>`${rivalData[15].name} says its next phone will target gamers.`,
+ ()=>`Market analysts are watching ${document.getElementById("companyName").value}. Your current reputation is ${Math.floor(game.reputation)}.`,
+ ()=>`Your phone has ${formatTech("camera",tech.camera)} camera technology.`,
+ ()=>`Your company currently has ${game.sales.toLocaleString()} lifetime sales.`,
+ ()=>`Your strongest rival currently has power ${Math.floor(Math.max(...rivalData.map(r=>r.power)))}.`
+];
+
+let newsIndex=0;
+
+function updateNews(){
+ let text=newsTemplates[newsIndex%newsTemplates.length]();
+
+ document.getElementById("newsText").textContent=text;
+
+ document.getElementById("ticker").textContent=
+  "● LIVE • "+new Date().toLocaleTimeString();
+
+ newsIndex++;
+}
+
+setInterval(()=>{
+ updateNews();
+ updateRivalsRandomly();
+},5000);
+
+function updateRivalsRandomly(){
+ rivalData.forEach(r=>{
+  r.power+=Math.random()*5-1;
+  r.sales+=Math.floor(Math.random()*500);
+  r.share=Math.max(1,Math.min(35,r.share+Math.random()*.5-.25));
+ });
+
+ renderRivals();
+}
+
+document.getElementById("backColor").addEventListener("input",e=>{
+ document.getElementById("screen").style.boxShadow=
+  "inset 0 0 0 1000px "+e.target.value+"22";
+});
+
+[
+ "frameColor",
+ "screenColor",
+ "logoColor",
+ "shape",
+ "cameraPosition",
+ "cameraHousing",
+ "logoText"
+].forEach(id=>{
+ document.getElementById(id).addEventListener("input",updatePhone);
+});
+
+document.getElementById("companyName").addEventListener("input",()=>{
+ updateNews();
+});
+
+buildTech();
+updatePhone();
+updateUI();
+updateNews();
+
+addLog("👩‍💻 NOVA AI NEWS is online.");
+addLog("🌎 16 rival companies are being monitored.");
+addLog("📱 You can upgrade every technology up to level 100,000.");
+</script>
+
+</body>
+</html>
+```
